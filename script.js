@@ -6,7 +6,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const showRegistrationFormLink = document.getElementById('showRegistrationForm');
     const loginForm = document.getElementById('loginForm');
     const accountList = document.getElementById('accountList');
+    const registrationForm = document.getElementById('registrationForm');
 
+    registrationForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
     // Load và hiển thị danh sách tài khoản khi trang được tải
     loadAccounts();
 
@@ -102,4 +110,27 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
+    // Gửi dữ liệu đến Netlify Function
+        try {
+            const response = await fetch('/.netlify/functions/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, email, password }),
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                alert(`Chào mừng ${name}! Bạn đã đăng ký thành công.`);
+                window.location.href = 'welcome.html';
+            } else {
+                alert('Đăng ký thất bại. Vui lòng thử lại.');
+            }
+        } catch (error) {
+            console.error('Lỗi khi gửi dữ liệu:', error);
+            alert('Có lỗi xảy ra khi đăng ký. Vui lòng thử lại sau.');
+        }
+    };
 });
