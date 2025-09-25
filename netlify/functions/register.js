@@ -8,8 +8,8 @@ exports.handler = async (event, context) => {
   const { name, email, password } = JSON.parse(event.body);
 
   const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
-  const repoOwner = "YOUR_GITHUB_USERNAME"; // Thay bằng tên người dùng GitHub của bạn
-  const repoName = "YOUR_REPO_NAME"; // Thay bằng tên kho lưu trữ của bạn
+  const repoOwner = "TuyenKhuusk"; // Thay bằng tên người dùng GitHub của bạn
+  const repoName = "inschool-website"; // Thay bằng tên kho lưu trữ của bạn
   const filePath = "users.json";
 
   try {
